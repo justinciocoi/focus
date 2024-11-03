@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200..800&display=swap');
+    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>focus.io</title>
+    <script>
+        window.onload = function() {
+            playAudio();
+            setVolume(volumeControl.value);
+        }
+            </script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="rain-container"></div> <!-- Container for raindrops -->
+<!-- Other content goes here -->
+
+    <audio id="audio" src="rain.mp3"></audio>
+    <select id="audioSelect" onchange="changeAudioSource()">
+        <option value="rain.mp3">Rain</option>
+        <option value="birds.mp3">Birds</option>
+        <option value="ocean.mp3">Ocean</option>
+        
+
+    </select>
+    <p class="header" id="mainHeader">Focus.</p>
+    <div class="flexbox">
+        <div class="vflexbox">
+            <input placeholder="Enter Focus Time" class="minuteInput" id="focusTime">
+        </div>
+        <div class="vflexbox">
+            <input placeholder="Enter Rest Time" class="minuteInput" id="restTime">
+        </div>
+    </div>
+
+    <div class="flexbox">
+        <div id="timer">
+            00:00
+        </div>
+        <div class="circle" id="circle2"></div>
+        <div class="circle" id="circle1"></div>
+    </div>
+
+    <div class="vflexbox">
+        <p class="header">Volume: </p>
+        <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1" oninput="setVolume(this.value)">
+    </div>
+    
+    <div class="vflexbox">
+        <button onclick="startTimer()">
+            Start timer
+        </button>
+        
+    </div>
+    
+    <div id="footer">
+
+    </div>
+</body>
+<script src="function.js"></script>
+</html>
