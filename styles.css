@@ -1,22 +1,59 @@
 body {
-    background-color: rgb(46, 23, 58);
+    background-color: rgb(23, 31, 58);
     color: white;
     font-family: 'Manrope';
 }
+
+button {
+    width: 20vw;
+    height: 45px;
+    font-size: 20pt;
+    border-radius: 20px;
+    background-color: rgb(86, 98, 124);
+    border: #1f1f77 2px solid;
+    color: lightgray;
+    text-shadow: 2px 2px black;
+    transition: transform 0.5s, color 0.5s, background-color 0.5s;
+    margin: 10px;
+    height: fit-content;
+}
+
+button:hover{
+    transform: translateY(-15%);
+    background-color: rgb(58, 67, 86);
+    color: white;
+}
+
+select {
+    background-color: rgb(86, 98, 124);
+    border-radius: 3px;
+    border: 0px;
+    color: white;
+    text-align: center;
+    margin-left: 25px;
+    z-index: 100;
+  }
+
+
+
 
 .header {
     font-size: xx-large;
     padding: 20px;
     margin-bottom: 0;
-    margin-top: 0
+    margin-top: 0;
+    padding: 15px;
 }
 
 #mainHeader {
     text-align: center;
-    font-weight: bold;
     font-size: 60pt;
     margin-bottom: 30px;
-    margin-top: 0
+    margin-top: 0;
+    font-family: 'Exo 2';
+    background: linear-gradient(to top, #ddd, rgb(124, 140, 174) 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .minuteInput {
@@ -25,19 +62,35 @@ body {
     height: 50px;
     padding: 5px;
     margin: 20px;
-    font-size: 2vw;
+    font-size: 4vh;
     text-align: center;
     text-overflow: wrap;
     border-radius: 20px;
+    background-color: rgb(86, 98, 124);
+    border: 0px;
+    color: white;
 }
+
+
 
 #minuteInputHeader {
     width: 100px;
 }
 
+#volumeControlContainer {
+    transform: scale(0.8);
+    transform-origin: left;
+    z-index: 1;
+    margin-top: 0;
+}
+
 .flexbox {
     display: flex;
     justify-content: center;
+}
+
+#volumeOuterContainer {
+    justify-content: start;
 }
 
 .vflexbox {
@@ -46,25 +99,19 @@ body {
     align-items: center;
 }
 
-button {
-    width: 20vw;
-    height: 45px;
-    font-size: 20pt;
-    border-radius: 20px;
-    background-color: rgb(186, 163, 196);
-    border: purple 2px solid;
-    color: lightgray;
-    text-shadow: 2px 2px black;
-    transition: transform 0.5s, color 0.5s;
-    margin: 10px;
+
+
+#muteButton {
+    width: 40px;
+    height: 40px;
+    margin-top: -15px;
 }
 
-button:hover{
-    transform: translateY(-10%);
-    color: white;
+#muteImage {
+    height: 20px;
+    width: 20px;
+    
 }
-
-
 
 
 
@@ -81,7 +128,7 @@ button:hover{
 
 .circle {
     position: absolute;
-    background-color:  rgb(46, 23, 58);
+    background-color: rgb(23, 31, 58);
     height: 250px;
     width: 250px;
     border-radius: 100%;
@@ -91,9 +138,9 @@ button:hover{
 }
 
 #circle1 {
-    width: 230px;
-    height: 230px;
-    transform: translateY(35px);
+    width: 210px;
+    height: 210px;
+    transform: translateY(45px);
 }
 
 #volumeControl {
@@ -121,19 +168,17 @@ button:hover{
 #volumeControl::-moz-range-thumb {
     width: 20px;
     height: 20px;
-    background-color: #6f29a8;
+    background-color: rgb(156, 180, 255);
     border-radius: 50%;
     cursor: pointer;
 }
 
 /* Active fill color before the thumb */
-#volumeControl::-webkit-slider-runnable-track {
-    background: linear-gradient(to right, #8400ff, #ddd);
-}
+
 
 /* Additional optional styling for track (custom color fill) */
 #volumeControl {
-    background: linear-gradient(to right, #ddd 0%, #8400ff 100%);
+    background: linear-gradient(to right, #ddd 0%, rgb(156, 180, 255) 100%);
     margin-bottom: 40px;
 }
 
@@ -146,7 +191,7 @@ button:hover{
     height: 100%;
     pointer-events: none; /* Ensure it doesn't interact with anything */
     overflow: hidden;
-    z-index: -1; /* Place it behind other content */
+    z-index: -100; /* Place it behind other content */
 }
 
 /* Styling for each raindrop */
@@ -159,6 +204,7 @@ button:hover{
     border-radius: 50%; /* Make it rounded */
     pointer-events: none; /* Prevent interaction */
     animation: fall linear infinite; /* Infinite fall animation */
+    z-index: -100;
 }
 
 /* Keyframes for the fall animation */
@@ -167,4 +213,74 @@ button:hover{
         transform: translateY(100vh); /* Move down to the bottom of the viewport */
     }
 }
+
+#playPauseButton {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+#stopButton {
+    width: 35px;
+    height: 35px;
+    border-radius: 0;
+    margin-top: 18px;
+    margin-right: 20px;
+    transition: background-color 0.5s;
+    background-color: #ffffff;
+    border: 0;
+}
+
+#stopButton:hover {
+    background-color: #aa81c2;
+    transform: translateY(0);
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+  }
+  
+  /* Triangle Button */
+  #triangle-button {
+    width: 0;
+    height: 0;
+    border-left: 40px solid transparent;
+    border-right: 40px solid transparent;
+    border-bottom: 70px solid #ffffff; /* Change to your desired color */
+    cursor: pointer;
+    position: relative;
+    transition: border-bottom-color 0.5s;
+    transform: rotate(90deg) scale(0.5);
+    
+  }
+
+  #pauseButton {
+    width: 9px;
+    height: 35px;
+    background-color:rgb(46, 23, 58);
+    position: relative;
+    margin-left: 20px;
+    margin-top: 8px;
+    border-left: white 13px solid;
+    border-right: white 13px solid;
+    transition: border 0.5s;
+  }
+
+  #pauseButton:hover {
+    border-left: #aa81c2 13px solid;
+    border-right: #aa81c2 13px solid;
+  }
+  
+  /* Optional: Adding hover effect */
+  #triangle-button:hover {
+    border-bottom-color: #aa81c2; /* Darker shade on hover */
+  }
+  
+
+
+  
 
