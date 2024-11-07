@@ -7,12 +7,12 @@
     </style>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>focus.io</title>
+    <title id="tabTitle">focus.io</title>
     <script>
         window.onload = function() {
-            playAudio();
             setVolume(volumeControl.value);
             changeAudioSource();
+            createRaindrops();
         }
     </script>
     <link rel="stylesheet" href="styles.css">
@@ -25,10 +25,11 @@
     
     
         <select id="audioSelect" onchange="changeAudioSource()">
-            <option value="" disabled selected>Select Audio</option>
+            <option value="" disabled>Select Audio</option>
             <option value="audio/rain.mp3">Rain</option>
             <option value="audio/birds.mp3">Birds</option>
             <option value="audio/ocean.mp3">Ocean</option>
+            <option value="audio/ClockTown.mp3">Clock Town</option>
         </select>
     
 
@@ -47,10 +48,12 @@
     <p class="header" id="mainHeader">Focus.</p>
     <div class="flexbox">
         <div class="vflexbox">
-            <input placeholder="Enter Focus Time" class="minuteInput" id="focusTime">
+            <div class="header2">Enter Focus Time:</div>
+            <input placeholder="0" class="minuteInput" id="focusTime">
         </div>
         <div class="vflexbox">
-            <input placeholder="Enter Rest Time" class="minuteInput" id="restTime">
+            <div class="header2">Enter Rest Time:</div>
+            <input placeholder="0" class="minuteInput" id="restTime">
         </div>
     </div>
 

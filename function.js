@@ -1,5 +1,6 @@
 let countdown;
 let isTimer = false;
+let isFocusPhase = true;  // Track if it's the focus or rest period
 
 function startTimer() {
     const focusField = document.getElementById("focusTime");
@@ -8,9 +9,11 @@ function startTimer() {
     
 
     if(!isTimer){
-        let isFocusPhase = true;  // Track if it's the focus or rest period
+        isFocusPhase = true;  // Track if it's the focus or rest period
         const focusTime = focusField.value * 60; // Convert minutes to seconds
         const restTime = restField.value * 60;   // Convert minutes to seconds
+        const focusInt = parseFloat(focusTime);
+        const restInt = parseFloat(restTime);
         let currentTime = focusTime;  // Start with the focus time
 
         document.getElementById('timerButton').innerText = "Stop Timer";
@@ -20,14 +23,19 @@ function startTimer() {
         const countdownCircle=document.getElementById('circle2')
         const duration = currentTime;
 
-        // Set up the interval to update every second
+        if(restInt && focusInt && Number.isInteger(restInt) && Number.isInteger(focusInt)){
+            // Set up the interval to update every second
         countdown = setInterval(() => {
             // Calculate minutes and seconds
             let minutes = Math.floor(currentTime / 60);
             let seconds = currentTime % 60;
 
             const percentage = (currentTime / duration) * 360;
-            countdownCircle.style.background = `conic-gradient(rgb(156, 180, 255) ${percentage}deg, #ddd ${percentage}deg)`;
+            countdownCircle.style.display = `block`;
+            if(isFocusPhase)
+                countdownCircle.style.background = `conic-gradient(rgb(156, 180, 255) ${percentage}deg, #ddd ${percentage}deg)`;
+            else
+                countdownCircle.style.background = `conic-gradient(rgb(206, 180, 205) ${percentage}deg, #ddd ${percentage}deg)`;
 
             // Format with leading zero if necessary
             minutes = minutes < 10 ? '0' + minutes : minutes;
@@ -47,10 +55,13 @@ function startTimer() {
 
                 // Display "OVER" message briefly before switching
                 if(isFocusPhase) {
-                    document.getElementById("timer").innerText = "Time for rest";
+                    document.getElementById("timer").innerText = "Time for focus";
+                    countdownCircle.style.display = `none`;
+
                 }
                 else{
-                    document.getElementById("timer").innerText = "Time to focus";
+                    document.getElementById("timer").innerText = "Time to rest";
+                    countdownCircle.style.display = `none`;
 
                 }
                 setTimeout(() => {
@@ -64,6 +75,7 @@ function startTimer() {
             updateLocalStorageTimer(currentTime);
             updateCircle(percentage);
         }, 1000); // Update every second
+        }
     }
     else{
         clearInterval(countdown);
@@ -103,10 +115,6 @@ function stopAudio() {
     pauseButton.id = 'triangle-button'
 }
 
-function setVolume(volume) {
-    audio.volume = volume;
-}
-
 function createRaindrops() {
     const rainContainer = document.querySelector('.rain-container');
     const raindropCount = 100; // Number of raindrops to generate
@@ -129,23 +137,10 @@ function createRaindrops() {
     }
 }
 
-// Call function to create raindrops initially
-createRaindrops();
-
-function changeAudioSource() {
-    const audio = document.getElementById("audio");
-    const audioSelect = document.getElementById("audioSelect");
-
-    // Update the audio src based on selected value
-    audio.src = audioSelect.value;
-
-    audio.play()
-}
-
 function openPopup() {
     const popupUrl = "popup.html"; // URL of the page or part you want to display in the pop-up
     const popupWidth = 400; // Width of the pop-up window
-    const popupHeight = 300; // Height of the pop-up window
+    const popupHeight = 350; // Height of the pop-up window
 
     // Calculate the position of the window (optional)
     const left = (screen.width / 2) - (popupWidth / 2);
@@ -159,27 +154,22 @@ function openPopup() {
     );
 }
 
-// Assuming `currentTime` is the current timer value in seconds, and `index.html` controls the timer.
+function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
+    const secs = (seconds % 60).toString().padStart(2, '0');
+    return `${mins}:${secs}`;
+}
 
-// This function is called in index.html's timer to update the localStorage value
 function updateLocalStorageTimer(currentTime) {
     localStorage.setItem("sharedTimer", currentTime);
 }
 
-// This function is called in popup.html to fetch the timer from localStorage
 function syncTimerFromLocalStorage() {
     const sharedTimer = localStorage.getItem("sharedTimer");
 
     if (sharedTimer !== null) {
         document.getElementById("timer").innerText = formatTime(sharedTimer);
     }
-}
-
-// Helper function to format time in MM:SS format
-function formatTime(seconds) {
-    const mins = Math.floor(seconds / 60).toString().padStart(2, '0');
-    const secs = (seconds % 60).toString().padStart(2, '0');
-    return `${mins}:${secs}`;
 }
 
 function updateCircle(percentage) {
@@ -197,18 +187,58 @@ function syncCircle() {
 }
 
 let isMute = false;
-let originalVolume;
-function mute(volume) {
-    if(!isMute){
-        originalVolume = volume;
-        setVolume(0);
-        document.getElementById('volumeControl').value = 0;
-        document.getElementById('muteImage').src = 'images/unmute.png';
-    }
-    else{
-        setVolume(originalVolume);
-        document.getElementById('volumeControl').value = originalVolume;
-        document.getElementById('muteImage').src = 'images/mute.png';
-    }
-    isMute = !isMute
+let originalVolume = 1; // Default volume if none is set
+
+function changeAudioSource() {
+    const audio = document.getElementById("audio");
+    const audioSelect = document.getElementById("audioSelect");
+
+    // Update the audio src based on selected value
+    audio.src = audioSelect.value;
+
+    audio.play()
 }
+
+function mute() {
+    const audio = document.getElementById('audio');
+    if (!isMute) {
+        originalVolume = audio.volume; // Save the current volume
+        setVolume(0); // Set the volume to 0 to mute
+        document.getElementById('volumeControl').value = 0; // Update slider to 0
+        document.getElementById('muteImage').src = 'images/unmute.png'; // Update mute icon
+    } else {
+        setVolume(originalVolume); // Restore the previous volume
+        document.getElementById('volumeControl').value = originalVolume; // Update slider to previous volume
+        document.getElementById('muteImage').src = 'images/mute.png'; // Update mute icon
+    }
+    isMute = !isMute; // Toggle mute state
+}
+
+function setVolume(volume) {
+    const audio = document.getElementById('audio');
+    audio.volume = volume;
+}
+
+document.getElementById('volumeControl').addEventListener('input', (event) => {
+    const newVolume = event.target.value; // Get volume as a fraction
+    setVolume(newVolume); // Set the new volume
+
+    if (newVolume > 0 && isMute) {
+        // Unmute if slider moved and was previously muted
+        isMute = false;
+        document.getElementById('muteImage').src = 'images/mute.png'; // Update mute icon
+    }
+});
+
+tabTitle = document.getElementById('tabTitle');
+
+function updateTabTitle() {
+    timeLeft = document.getElementById('timer').innerText;
+    if(isFocusPhase)
+        tabTitle.innerText = `${timeLeft} - Focus`;
+    else
+        tabTitle.innerText = `${timeLeft} - Rest`;
+
+}
+
+setInterval(updateTabTitle, 1000);
