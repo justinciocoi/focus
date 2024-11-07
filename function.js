@@ -35,7 +35,7 @@ function startTimer() {
             if(isFocusPhase)
                 countdownCircle.style.background = `conic-gradient(rgb(156, 180, 255) ${percentage}deg, #ddd ${percentage}deg)`;
             else
-                countdownCircle.style.background = `conic-gradient(rgb(206, 180, 205) ${percentage}deg, #ddd ${percentage}deg)`;
+                countdownCircle.style.background = `conic-gradient(rgb(124, 196, 184) ${percentage}deg, #ddd ${percentage}deg)`;
 
             // Format with leading zero if necessary
             minutes = minutes < 10 ? '0' + minutes : minutes;
