@@ -2,6 +2,19 @@ let countdown;
 let isTimer = false;
 let isFocusPhase = true;  // Track if it's the focus or rest period
 
+let isTimerPaused = false;
+
+
+function pauseTimer() {
+    image = document.getElementById('playPauseImage');
+    if(isTimer && !isTimerPaused){
+        isTimerPaused = true;
+        //turn pause button to play button
+        image.src = 'images/pause.png';
+        image.style.transform = 'translateX(-1px)'
+    }
+}
+
 function startTimer() {
     const focusField = document.getElementById("focusTime");
     const restField = document.getElementById("restTime");

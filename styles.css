@@ -237,64 +237,10 @@ select {
     border-radius: 100%;
 }
 
-#stopButton {
-    width: 35px;
-    height: 35px;
-    border-radius: 0;
-    margin-top: 18px;
-    margin-right: 20px;
-    transition: background-color 0.5s;
-    background-color: #ffffff;
-    border: 0;
+
+  
+#playPauseImage{
+    height: 25px;
+    width: 25px;
+    transform: translateX(3px);
 }
-
-#stopButton:hover {
-    background-color: #aa81c2;
-    transform: translateY(0);
-}
-
-
-.button-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-  }
-  
-  /* Triangle Button */
-  #triangle-button {
-    width: 0;
-    height: 0;
-    border-left: 40px solid transparent;
-    border-right: 40px solid transparent;
-    border-bottom: 70px solid #ffffff; /* Change to your desired color */
-    cursor: pointer;
-    position: relative;
-    transition: border-bottom-color 0.5s;
-    transform: rotate(90deg) scale(0.5);
-    
-  }
-
-  #pauseButton {
-    width: 9px;
-    height: 35px;
-    background-color:rgb(46, 23, 58);
-    position: relative;
-    margin-left: 20px;
-    margin-top: 8px;
-    border-left: white 13px solid;
-    border-right: white 13px solid;
-    transition: border 0.5s;
-  }
-
-  #pauseButton:hover {
-    border-left: #aa81c2 13px solid;
-    border-right: #aa81c2 13px solid;
-  }
-  
-  /* Optional: Adding hover effect */
-  #triangle-button:hover {
-    border-bottom-color: #aa81c2; /* Darker shade on hover */
-  }
-  
-

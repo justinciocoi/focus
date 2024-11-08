@@ -14,7 +14,7 @@ function mute() {
         document.getElementById('muteImage').src = 'images/unmute.png'; // Update mute icon
     } else {
         setVolume(originalVolume); // Restore the previous volume
-        document.getElementById('volumeControl').value = originalVolume; // Update slider to previous volume
+     document.getElementById('volumeControl').value = originalVolume; // Update slider to previous volume
         document.getElementById('muteImage').src = 'images/mute.png'; // Update mute icon
     }
     isMute = !isMute; // Toggle mute state
