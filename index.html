@@ -70,11 +70,11 @@
    
     
     <div class="vflexbox">
-        <button id="timerButton" onclick="startTimer()">
+        <button id="timerButton" onclick="startTimer(document.getElementById('focusTime'), document.getElementById('restTime'))">
             Start timer
         </button>
         <button onclick="pauseTimer()" id="playPauseButton">
-            <img src="images/play.png" id="playPauseImage">
+            <img src="images/Pause.png" id="playPauseImage">
         </button>
         <button id="popOutButton" onclick="openPopup()">
             Pop Out

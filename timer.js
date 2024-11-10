@@ -10,8 +10,13 @@ function pauseTimer() {
     if(isTimer && !isTimerPaused){
         isTimerPaused = true;
         //turn pause button to play button
+        image.src = 'images/play.png';
+        image.style.transform = 'translateY(2px) translateX(5px)'
+    }
+    else {
+        isTimerPaused = false;
         image.src = 'images/pause.png';
-        image.style.transform = 'translateX(-1px)'
+        image.style.transform = 'translateY(3px)';
     }
 }
 
@@ -19,6 +24,7 @@ function startTimer() {
     const focusField = document.getElementById("focusTime");
     const restField = document.getElementById("restTime");
 
+    document.getElementById('playPauseButton').style.display= 'inline';
     
 
     if(!isTimer){
@@ -85,6 +91,10 @@ function startTimer() {
             } else {
                 // Decrement time remaining in the current phase
                 currentTime--;
+                if(isTimerPaused) {
+                    cachedTime = currentTime;
+                    clearInterval(countdown);
+                }
                 updateTabTitle();
             }
             updateLocalStorageTimer(currentTime);
@@ -93,6 +103,7 @@ function startTimer() {
         }
     }
     else{
+        //stop and clear
         clearInterval(countdown);
         document.getElementById('timerButton').innerText = "Start Timer";
         document.getElementById('timer').innerText = "00:00";
@@ -101,27 +112,6 @@ function startTimer() {
     
 }
 
-function createRaindrops() {
-    const rainContainer = document.querySelector('.rain-container');
-    const raindropCount = 100; // Number of raindrops to generate
-
-    for (let i = 0; i < raindropCount; i++) {
-        const raindrop = document.createElement('div');
-        raindrop.classList.add('raindrop');
-        
-        // Set random horizontal position
-        raindrop.style.left = `${Math.random() * 100}vw`;
-
-        // Set initial fall duration and delay
-        const fallDuration = Math.random() * 0.5 + 1.5; // Initial speed (between 2s and 4s)
-        const fallDelay = Math.random() * -4; // Random delay for staggered effect
-        raindrop.style.animationDuration = `${fallDuration}s`;
-        raindrop.style.animationDelay = `${fallDelay}s`;
-
-        // Add raindrop to the container
-        rainContainer.appendChild(raindrop);
-    }
-}
 
 function formatTime(seconds) {
     const mins = Math.floor(seconds / 60).toString().padStart(2, '0');

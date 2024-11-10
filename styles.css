@@ -235,6 +235,7 @@ select {
     width: 50px;
     height: 50px;
     border-radius: 100%;
+    display: none;
 }
 
 
@@ -242,5 +243,6 @@ select {
 #playPauseImage{
     height: 25px;
     width: 25px;
-    transform: translateX(3px);
+    /*transform: translateX(5px) translateY(2px);*/
+    transform: translateY(3px);
 }
