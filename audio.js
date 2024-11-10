@@ -76,3 +76,23 @@ audio.addEventListener('ended', () => {
     audio.currentTime = 0; // Reset to the beginning
     audio.play();           // Start playing again
 });
+
+
+function createRaindrops() {
+    const rainContainer = document.querySelector('.rain-container');
+    const raindropCount = 100; // Number of raindrops to generate
+    for (let i = 0; i < raindropCount; i++) {
+        const raindrop = document.createElement('div');
+        raindrop.classList.add('raindrop');
+        
+        // Set random horizontal position
+        raindrop.style.left = `${Math.random() * 100}vw`;
+        // Set initial fall duration and delay
+        const fallDuration = Math.random() * 2 + 2; // Initial speed (between 2s and 4s)
+        const fallDelay = Math.random() * -4; // Random delay for staggered effect
+        raindrop.style.animationDuration = `${fallDuration}s`;
+        raindrop.style.animationDelay = `${fallDelay}s`;
+        // Add raindrop to the container
+        rainContainer.appendChild(raindrop);
+    }
+}

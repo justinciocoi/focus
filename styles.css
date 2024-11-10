@@ -5,7 +5,7 @@ body {
 }
 
 button {
-    width: 20vw;
+    width: auto;
     height: 45px;
     font-size: 20pt;
     border-radius: 20px;
@@ -16,6 +16,7 @@ button {
     transition: transform 0.5s, color 0.5s, background-color 0.5s;
     margin: 10px;
     height: fit-content;
+    padding: 15px;
 }
 
 button:hover{
@@ -114,6 +115,7 @@ select {
     width: 40px;
     height: 40px;
     margin-top: -15px;
+    padding: 0;
 }
 
 #muteImage {
@@ -236,6 +238,7 @@ select {
     height: 50px;
     border-radius: 100%;
     display: none;
+    padding: 0;
 }
 
 
