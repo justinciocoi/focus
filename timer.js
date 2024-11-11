@@ -12,13 +12,13 @@ function pauseTimer() {
         isTimerPaused = true;
         clearInterval(countdown); // Stop the countdown
         image.src = 'images/play.png';
-        image.style.transform = 'translateY(2px) translateX(5px)';
+        image.style.transform = 'translateY(1px) translateX(4px)';
     } else if (isTimer && isTimerPaused) {
         // Resume the timer
         isTimerPaused = false;
         startCountdown(); // Start the countdown again with remaining time
         image.src = 'images/pause.png';
-        image.style.transform = 'translateY(3px)';
+        image.style.transform = 'translateY(2px)';
     }
 }
 
@@ -35,6 +35,7 @@ function startTimer() {
         if (Number.isInteger(focusTime) && Number.isInteger(restTime) && focusTime > 0 && restTime > 0) {
             currentTime = focusTime; // Set initial time to focus time
             document.getElementById('playPauseButton').style.display = 'inline';
+            document.getElementById('playPauseButton').style.position = 'absolute';
             duration = focusTime; // Set duration based on phase (fixed until next phase change)
             document.getElementById('timerButton').innerText = "Stop Timer";
             isTimer = true;
