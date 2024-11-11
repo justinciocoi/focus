@@ -25,7 +25,7 @@ function pauseTimer() {
 function startTimer() {
     const focusField = document.getElementById("focusTime");
     const restField = document.getElementById("restTime");
-    document.getElementById('playPauseButton').style.display = 'inline';
+    
 
     if (!isTimer) {
         isFocusPhase = true; // Start with focus phase
@@ -34,6 +34,7 @@ function startTimer() {
 
         if (Number.isInteger(focusTime) && Number.isInteger(restTime) && focusTime > 0 && restTime > 0) {
             currentTime = focusTime; // Set initial time to focus time
+            document.getElementById('playPauseButton').style.display = 'inline';
             duration = focusTime; // Set duration based on phase (fixed until next phase change)
             document.getElementById('timerButton').innerText = "Stop Timer";
             isTimer = true;
@@ -141,4 +142,58 @@ function updateLocalStorageTimer(currentTime) {
 
 function updateCircle(percentage) {
     localStorage.setItem("sharedCirclePercentage", percentage);
+}
+
+
+function openPopup() {
+    const popupUrl = "popup.html"; // URL of the page or part you want to display in the pop-up
+    const popupWidth = 250; // Width of the pop-up window
+    const popupHeight = 250; // Height of the pop-up window
+    // Calculate the position of the window (optional)
+    const left = (screen.width / 2) - (popupWidth / 2);
+    const top = (screen.height / 2) - (popupHeight / 2);
+    // Open the new window with specified features
+    window.open(
+        popupUrl,
+        "popupWindow",
+        `width=${popupWidth},height=${popupHeight},left=${left},top=${top},toolbar=no,menubar=no,scrollbars=no,resizable=no,status=no`
+    );
+}
+
+function syncPopup() {
+    const timer = document.getElementById('timer');
+
+    currentTime = localStorage.getItem('sharedTimer');
+    percentage = localStorage.getItem('sharedCirclePercentage');
+
+    let minutes = Math.floor(currentTime / 60);
+    let seconds = currentTime % 60;
+
+    document.getElementById("timer").innerText = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+    const countdownCircle = document.getElementById('circle2');
+
+    countdownCircle.style.display = `block`;
+    countdownCircle.style.background = isFocusPhase
+        ? `conic-gradient(rgb(156, 180, 255) ${percentage}deg, #ddd ${percentage}deg)`
+        : `conic-gradient(rgb(124, 196, 184) ${percentage}deg, #ddd ${percentage}deg)`;
+}
+
+function createRaindrops() {
+    const rainContainer = document.querySelector('.rain-container');
+    const raindropCount = 100; // Number of raindrops to generate
+    for (let i = 0; i < raindropCount; i++) {
+        const raindrop = document.createElement('div');
+        raindrop.classList.add('raindrop');
+        
+        // Set random horizontal position
+        raindrop.style.left = `${Math.random() * 100}vw`;
+        // Set initial fall duration and delay
+        const fallDuration = Math.random() * 2 + 2; // Initial speed (between 2s and 4s)
+        const fallDelay = Math.random() * -4; // Random delay for staggered effect
+        raindrop.style.animationDuration = `${fallDuration}s`;
+        raindrop.style.animationDelay = `${fallDelay}s`;
+        // Add raindrop to the container
+        rainContainer.appendChild(raindrop);
+    }
 }

@@ -10,12 +10,12 @@
     <script>
         window.onload = function() {
             createRaindrops();
-            circle();
+            setInterval(syncPopup, 1000);
         }
     </script>
     <link rel="stylesheet" href="styles.css">
 </head>
-<body style="overflow-y: hidden;">
+<body style="overflow-y: hidden; transform: translateY(-30px);">
     <div class="rain-container"></div>
 
     <div class="flexbox">
@@ -25,12 +25,13 @@
         <div class="circle" id="circle2"></div>
         <div class="circle" id="circle1"></div>
     </div>
+    <button onclick="pauseTimer()" id="playPauseButton">
+        <img src="images/Pause.png" id="playPauseImage">
+    </button>
 </body>
 <script src="timer.js"></script>
-<script src="audio.js"></script>
 
 <script>
-    setInterval(syncTimerFromLocalStorage, 1000);
-    setInterval(syncCircle, 1000);
+    
 </script>
 </html>
